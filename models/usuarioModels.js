@@ -12,24 +12,23 @@ function obterTodos() {
 }
 
 // Função para buscar usuário único por id
-function obterUnico() {
+function obterUnico(id) {
   return new Promise((resolve, reject) => {
-    db.all(`SELECT * FROM Usuario where id = ${id}`, [], (err, rows) => {
+    db.get(`SELECT * FROM Usuario WHERE id = '${id}'`, (err, row) => {
       if (err) reject(err);
-      resolve(rows);
+      resolve(row);
     });
   });
 }
 
 // Função para criar um novo usuário
-function criaUsuario(name, email) {
+function criaUsuario(nome, email, senha) {
   return new Promise((resolve, reject) => {
     db.run(
-      "INSERT INTO Usuario (nome, email, senha) VALUES (?, ?, ?)",
-      [name, email, senha],
+      `INSERT INTO Usuario (nome, email, senha) VALUES ('${nome}', '${email}', '${senha}')`,
       function (err) {
         if (err) reject(err);
-        resolve(this.lastID); // ID do usuário recém-criado
+        resolve(this.lastID);
       }
     );
   });

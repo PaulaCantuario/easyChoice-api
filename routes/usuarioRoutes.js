@@ -31,8 +31,8 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const { nome, email, senha } = req.body;
   try {
-    const userId = await userModel.criaUsuario(nome, email, senha);
-    res.status(201).json({ message: "Usuário criado com sucesso.", userId });
+    const idUsuario = await usuarioModels.criaUsuario(nome, email, senha);
+    res.status(201).json({ message: "Usuário criado com sucesso.", idUsuario: idUsuario });
   } catch (err) {
     res.status(500).json({ error: "Erro ao criar usuário." });
   }
